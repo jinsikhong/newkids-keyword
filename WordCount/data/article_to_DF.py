@@ -18,6 +18,8 @@ def get_article(article_path):
         # 첫번째 행만 읽기
         for line in reader:
             article_list.append(line)
+    #테스트
+    article_list = article_list
 
     title = [row[0] for row in article_list[1:]]
     sub_title = [row[1] for row in article_list[1:]]

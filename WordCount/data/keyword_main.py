@@ -14,9 +14,10 @@ os.environ["JAVA_HOME"] = "C:\Program Files\Java\jdk-11"
 os.environ["SPARK_HOME"] = 'C:\Program Files\spark-3.4.1-bin-hadoop3/'
 os.environ["HADOOP_HOME"] = 'C:\Program Files\spark-3.4.1-bin-hadoop3/'
 
-stop_word_path = 'C:\SSAFY\Study\WordCount\불용어.csv'
+stop_word_path = '..\불용어.csv'
 # article_path = 'C:/SSAFY/Study/WordCount/crawl-data/combined_data.csv'
-article_path = 'C:/SSAFY/Study/WordCount/article_test_data.csv'
+# article_path = '../crawl-data/combined_data.csv'
+article_path = '../article_test_data.csv'
 
 TOP_K_KEYWORDS = 10 # top k number of keywords to retrieve in a ranked document
 # 불용어 리스트
@@ -26,12 +27,15 @@ article_df = atd.get_article(article_path)
 # 기사 리스트
 article_list = article_df.values.tolist()
 start = time.time()
+print("키워드 추출 시작")
 # 기사 별 키워드 리스트
 keyword_list = kw.get_keyword(article_list, stop_word_list)
 # 키워드를 문장으로 합치기
 corpora = [' '.join(keyword) for keyword in keyword_list]
 # 벡터라이저, 특징 이름(단어이름), tf-idf 벡터 행렬
 vectorizer, feature_names, matrix = kw.calf_TFIDF(corpora)
+print("tf-idf 행렬 벡터")
+print(matrix)
 # 키워드, 핵심 키워드를 담은 DF
 result = kw.get_result(vectorizer, feature_names, corpora)
 end = time.time()

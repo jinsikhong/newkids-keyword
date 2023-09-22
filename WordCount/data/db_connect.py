@@ -3,8 +3,11 @@ import time
 
 import pandas as pd
 from sqlalchemy import create_engine
-import pymysql as my
+import pymysql
 from sklearn.feature_extraction.text import TfidfVectorizer
+
+
+
 
 
 # article data형식에 맞는 tupel 리턴
@@ -22,12 +25,24 @@ def insert_article_make_data(article_df):
     print(input_data[0])
     return input_data
 
+
+
+def select_article():
+    return None
+
+
+
+
+
+
+
+
 def insert_article(article_df):
     db_connection_path = 'mysql+pymysql://root:root@127.0.0.1:3306/newkids'
     db_connection = create_engine(db_connection_path)
     conn = db_connection.connect()
 
-    df = article_df[['title','sub_title','writer','published_date', 'content', 'thumbnail_img','all_keywords', 'html_content']]
+    df = article_df[['title','sub_title','writer','published_date', 'content', 'thumbnail_img','all_keywords', 'top_keywords', 'html_content']]
 
     df.to_sql(name='article', con = db_connection, if_exists='append', index=False)
     # columns = ['title', 'sub_title', 'writer', 'published_date', 'content', 'thumbnail_img', 'all_keywords', 'html_content'])
@@ -113,7 +128,7 @@ def insert_tfidf(data_list):
     connection = None
 
     try:
-        connection = my.connect(
+        connection = pymysql.connect(
             host="127.0.0.1",
             port=3306,
             user='ssafy',

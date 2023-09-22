@@ -1,5 +1,8 @@
 import os
 import time
+import getKeyword as kw
+# import db_connect
+import article_to_DF as atd
 
 import numpy as np
 import pandas as pd
@@ -17,37 +20,61 @@ def get_recommenations_by_cosine(idx, cosine_sim, data):
     return data.iloc[articles_indices]
 
 
-pd.set_option('display.max_rows', None)
-pd.set_option('display.max_columns', None)
-pd.set_option('display.max_colwidth', None)
-
-# csv 파일 로드
-dir_path = "C://Users/SSAFY/Desktop/article_data/articles"
-dirs = os.listdir(dir_path)
-print(dirs)
-# csv 파일 병함
-articles_df = pd.DataFrame()
-for file in dirs:
-    df = pd.read_csv(os.path.join(dir_path, file), encoding="ansi").loc[:, ['제목', '키워드', '본문']]
-    # print(df.shape)
-    articles_df = pd.concat([articles_df, df])
-    # break
-
-# 인덱스 새로 부여
-print(articles_df.index)
-# 샘플 사이즈 조절
-# sample_size = 1000
-# articles_df = articles_df.iloc[:1000]
-print(articles_df.shape)
-
-# 키워드를 공백으로 분할 (, 로 분할되어있는 문장)
-articles_df['키워드'] = articles_df['키워드'].apply(lambda x: x.split(", "))
+# pd.set_option('display.max_rows', None)
+# pd.set_option('display.max_columns', None)
+# pd.set_option('display.max_colwidth', None)
+#
+# # csv 파일 로드
+# dir_path = "C://Users/SSAFY/Desktop/article_data/articles"
+# dirs = os.listdir(dir_path)
+# print(dirs)
+# # csv 파일 병함
+# articles_df = pd.DataFrame()
+# for file in dirs:
+#     df = pd.read_csv(os.path.join(dir_path, file), encoding="ansi").loc[:, ['제목', '키워드', '본문']]
+#     # print(df.shape)
+#     articles_df = pd.concat([articles_df, df])
+#     # break
+#
+# # 인덱스 새로 부여
+# print(articles_df.index)
+# # 샘플 사이즈 조절
+# # sample_size = 1000
+# # articles_df = articles_df.iloc[:1000]
+# print(articles_df.shape)
+#
+# # 키워드를 공백으로 분할 (, 로 분할되어있는 문장)
+# articles_df['키워드'] = articles_df['키워드'].apply(lambda x: x.split(", "))
+#
+stop_word_path = '..\불용어.csv'
+# article_path = '../article_test_data.csv'
+article_path = '../crawl-data/combined_data.csv'
+stop_word_list = kw.get_stopwords(stop_word_path)
+# 기사 dataframe
+article_df = atd.get_article(article_path)
+# 기사 리스트
+article_list = article_df.values.tolist()
+print("키워드 추출 시작")
+# 기사 별 키워드 리스트
+keyword_list = kw.get_keyword(article_list, stop_word_list)
+# 키워드를 문장으로 합치기
+corpora = [' '.join(keyword) for keyword in keyword_list]
 
 # TF-IDF 벡터화
-start = time.time()
+
 tfidf_vectorizer = TfidfVectorizer()
 # 문서 단어 행렬
-tfidf_matrix = tfidf_vectorizer.fit_transform([' '.join(keywords) for keywords in articles_df['키워드']])  # i 번 기사에 대한 각 keyword_vector 에 대한 가중치가 결과로 나옴
+
+vectorizer, feature_names, matrix = kw.calf_TFIDF(corpora)
+result = kw.get_result(vectorizer, feature_names, corpora)
+article_df = article_df.join(result['all_keywords'])
+article_df = article_df.join(result['top_keywords'])
+
+
+start = time.time()
+tfidf_matrix = tfidf_vectorizer.fit_transform(result['all_keywords'])  # i 번 기사에 대한 각 keyword_vector 에 대한 가중치가 결과로 나옴
+
+
 end = time.time()
 print(f"TF-IDF 벡터화 소요 시간: {end - start} sec")
 print("TF-IDF 벡터화 종료")
@@ -57,15 +84,18 @@ print(tfidf_matrix)
 start = time.time()
 idx = 0
 similarity = cosine_similarity(tfidf_matrix[idx], tfidf_matrix)
+print("cosine similarity shape", similarity.shape)
 print("cosine similarity done.")
 end = time.time()
 print(f"{end - start: .5f} sec")
 
 # 추천 (일반)
-recommended_articles = get_recommen ations_by_cosine(idx=0, cosine_sim=similarity, data=articles_df)
-print(articles_df.loc[0]['제목'])
+recommended_articles = get_recommenations_by_cosine(idx=idx, cosine_sim=similarity, data=article_df)
+# print(c.loc[0]['제목'])
 
-print(recommended_articles['제목'][:10])
+print(result['top_keywords'][idx])
+print(recommended_articles['title'][:10])
+print(recommended_articles['all_keywords'][:10])
 
 # ================================================================================================== #
 # 상위 키워드 개수 설정

@@ -1,17 +1,10 @@
 # 키워드 추출
-import findspark
-import pyspark
 from sklearn.feature_extraction.text import TfidfVectorizer
-
-print(findspark.init())
-print(findspark.find())
 
 import csv
 import chardet
-import findspark
 # Initiate findspark
 from konlpy.tag import Okt  # 형태소 분석기
-from pyspark.sql import SparkSession
 import time
 import pandas as pd
 import os
@@ -68,7 +61,7 @@ def get_keyword(article_lst, stop_word_set):
     # KoNLPy 형태소 분석기 초기화
     # Spark 활용 필터 적용
 
-    spark = SparkSession.builder.appName("TF-IDF Example").getOrCreate()
+    # spark = SparkSession.builder.appName("TF-IDF Example").getOrCreate()
 
     keyword_list = []
     title_keyword_list = []
@@ -149,7 +142,7 @@ def get_top10_keywords(vectorizer, feature_names, doc):
     # extract only TOP_K_KEYWORDS
     keywords = extract_topn_from_vector(feature_names, sorted_items, 10)
 
-    return list(keywords.keys())
+    return ' '.join(list(keywords.keys()))
 
 
 def calf_TFIDF(corpora):
@@ -231,5 +224,3 @@ def get_result(vectorizer, feature_names, corpora):
 # article_df = pd.DataFrame({"title"})
 #
 # print(final)
-
-print(get_article('C:/SSAFY/Study/WordCount/article_test_data.csv'))
