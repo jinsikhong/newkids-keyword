@@ -75,7 +75,7 @@ def get_keyword(article_lst, stop_word_set):
         # 본문에서 뽑기
         res = okt.nouns(article_lst[i][5])
         # 제목에서 뽑기
-        res.extend(okt.nouns(article_lst[i][0]))
+        res.extend(okt.nouns(article_lst[i][1]))
 
         # No Rdd
         filtered_list = [word for word in res if word not in stop_word_set]
