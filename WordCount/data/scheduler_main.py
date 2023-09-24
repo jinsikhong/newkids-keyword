@@ -1,6 +1,6 @@
-import getKeyword as kw
-import article_to_DF as atd
-import db_connect as db
+from . import getKeyword as kw
+from . import article_to_DF as atd
+from . import db_connect as db
 import time
 # 크롤링하고 키워드 추출 후 DB에 insert하는 스크립트(스케줄러 사용)
 # 스케줄링 돌아가는 main 스크립트
@@ -14,7 +14,7 @@ def get_keyword_by_crawl_data(items):
     crawl_data = items
     # 변수 선언
     # 불용어 리스트
-    stop_word_path = ('../불용어.csv')
+    stop_word_path = ('../WordCount/불용어.csv')
     # top k number of keywords to retrieve in a ranked document
     TOP_K_KEYWORDS = 10
 

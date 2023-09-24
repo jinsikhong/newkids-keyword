@@ -9,9 +9,9 @@ import time
 import pandas as pd
 import os
 
-os.environ["JAVA_HOME"] = "C:\Program Files\Java\jdk-11"
-os.environ["SPARK_HOME"] = 'C:\Program Files\spark-3.4.1-bin-hadoop3/'
-os.environ["HADOOP_HOME"] = 'C:\Program Files\spark-3.4.1-bin-hadoop3/'
+# os.environ["JAVA_HOME"] = "C:\Program Files\Java\jdk-11"
+# os.environ["SPARK_HOME"] = 'C:\Program Files\spark-3.4.1-bin-hadoop3/'
+# os.environ["HADOOP_HOME"] = 'C:\Program Files\spark-3.4.1-bin-hadoop3/'
 
 
 def get_stopwords(csv_file_path):
