@@ -39,7 +39,7 @@ def select_article():
 
 def insert_article(article_df):
     # db_connection_path = 'mysql+pymysql://root:root@127.0.0.1:3306/newkids'
-    db_connection_path = 'mysql+pymysql://root:12341234@127.0.0.1:3306/newkids' # mac
+    db_connection_path = 'mysql+pymysql://root:root@127.0.0.1:3306/newkids' # mac
 
     db_connection = create_engine(db_connection_path)
     conn = db_connection.connect()

@@ -28,7 +28,7 @@ def get_crawl_article():
         # return df
         #
         #   방법 2
-        db_connection_path = 'mysql+pymysql://root:12341234@127.0.0.1:3306/newkids_test'
+        db_connection_path = 'mysql+pymysql://root:root@127.0.0.1:3306/newkids_test'
         db_connection = create_engine(db_connection_path)
         connection = db_connection.connect()
         sql = (

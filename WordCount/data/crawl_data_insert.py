@@ -39,6 +39,18 @@ corpora = [' '.join(keyword) for keyword in keyword_list]
 # 벡터라이저, 특징 이름(단어이름), tf-idf 벡터 행렬
 vectorizer, feature_names, matrix = kw.calf_TFIDF(corpora)
 # 키워드, 핵심 키워드르, 기사 정보를 담은 DF
+
+'''
+여기서 matrix를 우리 디비에다가 넣는 작업을 하시면 됩니다. 
+
+
+
+
+'''
+
+
+
+
 result = kw.get_result(vectorizer, feature_names, corpora)
 # 결과 합치기
 article_df['all_keywords'] = result['all_keywords']
