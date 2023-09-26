@@ -19,9 +19,10 @@ def insert_article_make_data(article_df):
     content = article_df['content'].tolist()
     html_content = article_df['html_content'].tolist()
     all_keywords = article_df['all_keywords'].tolist()
+    top_keywords = article_df['top_keywords'].tolist()
     print("타이틀 리스트 : ", title[0])
 
-    input_data = list(zip(title, sub_title, writer, published_date, content, html_content, all_keywords))
+    input_data = list(zip(title, sub_title, writer, published_date, content, html_content, all_keywords, top_keywords))
     print(input_data[0])
     return input_data
 
