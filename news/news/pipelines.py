@@ -18,7 +18,7 @@ class NewsPipeline:
     def __init__(self):
         self.connect = pymysql.connect(
             host = 'localhost',
-            db = 'chosun',
+            db = 'test1',
             user = 'root',
             password = 'ssafyc204',
         )
@@ -50,7 +50,6 @@ class NewsPipeline:
                 sc.get_keyword_by_crawl_data(pandas_items)
 
                 self.cursor.execute(
-                    # "INSERT INTO article (title, sub_title, writer, published_date, content, thumbnail_img, create_date, last_modified_date, all_keywords, html_content, url) value(%s, %s, %s, %s, %s, %s, now(), now(), '1', %s, %s)",
                     "INSERT INTO article "
                     "(title, sub_title, writer, published_date, content, thumbnail_img, "
                     "all_keywords, html_content) "
@@ -67,16 +66,6 @@ class NewsPipeline:
                     ))
                 self.connect.commit()
 
-                # self.cursor.execute(
-                #     "INSERT INTO article_image "
-                #     "(url) "
-                #     "VALUES "
-                #     "(%s)",
-                #     (
-                #         item['imgs'],
-                #     ))
-            
-                # self.connect.commit()
             else:
                 print(f"제목 '{item['title']}'이 이미 존재합니다.")
         except Exception as e:

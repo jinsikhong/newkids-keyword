@@ -15,6 +15,5 @@ class NewsItem(scrapy.Item):
     published_date = scrapy.Field()
     thumbnail_img = scrapy.Field()
     content = scrapy.Field()
-    imgs = scrapy.Field()
     html_content = scrapy.Field()
     pass
