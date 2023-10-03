@@ -12,15 +12,15 @@ import os
 import sys
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))))
  
-from WordCount.data import scheduler_main as sc 
+# from WordCount.data import scheduler_main as sc
 
 class NewsPipeline:
     def __init__(self):
         self.connect = pymysql.connect(
             host = 'localhost',
-            db = 'test1',
+            db = 'newkids_test',
             user = 'root',
-            password = 'ssafyc204',
+            password = '12341234',
         )
         self.cursor = self.connect.cursor()
 
@@ -47,7 +47,7 @@ class NewsPipeline:
                 print(type(pandas_items))
                 print(pandas_items)
                 print(pandas_items.columns.tolist())
-                sc.get_keyword_by_crawl_data(pandas_items)
+                # sc.get_keyword_by_crawl_data(pandas_items)
 
                 self.cursor.execute(
                     "INSERT INTO article "

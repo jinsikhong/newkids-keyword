@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 import json
 import requests
 from news.items import NewsItem
+# from news.items import NewsItem
 from bs4 import BeautifulSoup
 import time
 import re
