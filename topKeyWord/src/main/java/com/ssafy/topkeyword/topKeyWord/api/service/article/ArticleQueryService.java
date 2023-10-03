@@ -13,6 +13,20 @@ import java.util.*;
 public class ArticleQueryService {
     private final ArticleQueryRepository articleQueryRepository;
 
+    public KeywordResponse getTopKeywordByToday(){
+        List<TopKeywordDto> topKeywordList = articleQueryRepository.getTopKeyword();
+        for(int i = 0; i < topKeywordList.size(); i++){
+            System.out.println(topKeywordList.get(i).getTopKeyword());
+        }
+        if(topKeywordList.size() == 0){
+            log.info("수집 데이터 없음");
+            return null;
+        }
+        KeywordResponse response = splitTopKeyword(topKeywordList);
+
+        return response;
+    }
+
     public KeywordResponse getTopKeyword(){
         List<TopKeywordDto> topKeywordList = articleQueryRepository.getTopKeyword();
         KeywordResponse response = splitTopKeyword(topKeywordList);

@@ -32,6 +32,8 @@ public class TopKeyWordApplication {
 
 	public static void main(String[] args) {
 //		SpringApplication.run(TopKeyWordApplication.class, args);
+
+
 		log.info("start : start");
 		// ArticleQueryService 빈을 주입받아서 메서드 호출
 		ApplicationContext context = SpringApplication.run(TopKeyWordApplication.class, args);
@@ -39,9 +41,16 @@ public class TopKeyWordApplication {
 		KeywordService keywordService = context.getBean(KeywordService.class);
 		ArticleKeywordService articleKeywordService = context.getBean(ArticleKeywordService.class);
 
-		KeywordResponse keywordResponse = articleQueryService.getTopKeyword();
-		Map<String, Keyword> keywordIdMap  = keywordService.createKeyword(keywordResponse.getKeywords());
-		articleKeywordService.createArticleKeyword(keywordIdMap, keywordResponse.getTopKeywordResponses());
+		KeywordResponse keywordResponseToday = articleQueryService.getTopKeywordByToday();
+		if(keywordResponseToday == null){
+			log.info("수집 데이터 없음");
+		}
+		log.info("개수");
+
+		// 전체 데이터 넣는 부분
+//		KeywordResponse keywordResponse = articleQueryService.getTopKeyword();
+//		Map<String, Keyword> keywordIdMap  = keywordService.createKeyword(keywordResponse.getKeywords());
+//		articleKeywordService.createArticleKeyword(keywordIdMap, keywordResponse.getTopKeywordResponses());
 		log.info("insert 끝");
 //		System.out.println(topKeywordResponses.size());
 

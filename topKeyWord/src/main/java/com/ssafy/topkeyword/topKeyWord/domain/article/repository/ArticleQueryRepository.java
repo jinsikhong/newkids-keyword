@@ -8,6 +8,8 @@ import com.ssafy.topkeyword.topKeyWord.domain.article.QArticle;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 
 import static com.ssafy.topkeyword.topKeyWord.domain.article.QArticle.article;
@@ -19,6 +21,17 @@ public class ArticleQueryRepository {
 
     public ArticleQueryRepository(EntityManager em){
         this.queryFactory = new JPAQueryFactory(em);
+    }
+
+    public List<TopKeywordDto> getTopKeywordByToday(){
+        Date curDate = new Date();
+        return queryFactory
+                .select(Projections.constructor(TopKeywordDto.class,
+                        article.id,
+                        article.topKeywords))
+                .from(article)
+                .where(article.publishedDate.eq(curDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().minusDays(1).atStartOfDay()))
+                .fetch();
     }
 
     public List<TopKeywordDto> getTopKeyword() {

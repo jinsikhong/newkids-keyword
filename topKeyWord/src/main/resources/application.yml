@@ -2,9 +2,9 @@ spring:
   datasource:
 
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/newkids?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true&useSSL=false
+    url: jdbc:mysql://127.0.0.1:3306/newkids_test?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true&useSSL=false
     username : "root"
-    password : "root"
+    password : "12341234"
   #    driver-class-name: org.mariadb.jdbc.Driver
   #    url: jdbc:mariadb://stg-yswa-kr-practice-db-master.mariadb.database.azure.com:3306/S09P12C203?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true&useSSL=false
   #    username: "S09P12C203"
@@ -18,7 +18,7 @@ spring:
   jpa:
     hibernate:
       ddl-auto : update
-      #      ddl-auto: create
+#            ddl-auto: create
       #      ddl-auto: none
 #      show-sql: true # DDL 출력
     generate-ddl: true
